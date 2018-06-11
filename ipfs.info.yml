@@ -1,0 +1,5 @@
+name: 'IPFS'
+type: module
+description: 'Provides integration with IPFS.'
+core: 8.x
+configure: ipfs.settings

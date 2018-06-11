@@ -1,0 +1,7 @@
+ipfs.settings:
+  path: '/admin/config/media/ipfs'
+  defaults:
+    _form: '\Drupal\ipfs\Form\IpfsSettingsForm'
+    _title: 'Configure IPFS connection'
+  requirements:
+    _permission: 'administer site configuration'

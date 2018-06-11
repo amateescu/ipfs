@@ -1,0 +1,11 @@
+{
+    "name": "drupal/ipfs",
+    "type": "drupal-module",
+    "description": "Provides integration with IPFS.",
+    "homepage": "https://github.com/amateescu/ipfs",
+    "license": "GPL-2.0+",
+    "require": {
+        "ipfs/php-stream-wrapper": "dev-master"
+    },
+    "minimum-stability": "dev"
+}

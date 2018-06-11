@@ -1,0 +1,5 @@
+ipfs.settings:
+  route_name: ipfs.settings
+  parent: system.admin_config_media
+  title: 'IPFS Configuration'
+  description: 'Configure how Drupal connects to IPFS.'

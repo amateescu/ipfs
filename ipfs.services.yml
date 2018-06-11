@@ -1,0 +1,10 @@
+services:
+  stream_wrapper.ipfs:
+    class: \Drupal\ipfs\StreamWrapper\IpfsStream
+    tags:
+      - { name: stream_wrapper, scheme: ipfs }
+  ipfs_subscriber:
+    class: Drupal\ipfs\EventSubscriber\IpfsSubscriber
+    arguments: ['@config.factory', '@settings']
+    tags:
+      - { name: event_subscriber }

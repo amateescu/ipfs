@@ -1,0 +1,9 @@
+# Schema for the configuration files of the IPFS module.
+
+ipfs.settings:
+  type: config_object
+  label: 'IPFS settings'
+  mapping:
+    ipfs_host:
+      type: uri
+      label: 'IPFS host'

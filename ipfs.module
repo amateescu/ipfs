@@ -1,0 +1,45 @@
+<?php
+
+/**
+ * @file
+ * Contains hook implementations for the IPFS module.
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\ipfs\Entity\IpfsImageStyle;
+
+/**
+ * Implements hook_ENTITY_TYPE_presave() for the file entity.
+ */
+function ipfs_file_presave(EntityInterface $entity) {
+  /** @var \Drupal\file\FileInterface $entity */
+  $uri = $entity->getFileUri();
+
+  // Update the URI of the file to point to the IPFS hash instead of the local
+  // path.
+  if ($entity->isNew() && \Drupal::service('file_system')->uriScheme($uri) === 'ipfs') {
+    $target = '/' . file_uri_target($uri);
+    $directory = dirname($target);
+    $file = basename($target);
+
+    // Get the hash of the parent directory and use it to construct an URI like:
+    // 'ipfs://<dir_hash>/<filename.ext>'.
+    $ipfs_host = \Drupal::config('ipfs.settings')->get('ipfs_host');
+    $uri = $ipfs_host . '/api/v0/files/stat?arg=' . $directory;
+
+    $response = \Drupal::httpClient()->request('GET', $uri);
+    $body = json_decode($response->getBody()->getContents(), true);
+
+    $uri = 'ipfs://' . $body['Hash'] . '/' . $file;
+
+    $entity->setFileUri($uri);
+  }
+}
+
+/**
+ * Implements hook_entity_type_alter().
+ */
+function ipfs_entity_type_alter(array &$entity_types) {
+  // Use a custom image style class.
+  $entity_types['image_style']->setClass(IpfsImageStyle::class);
+}
